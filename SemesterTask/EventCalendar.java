@@ -30,20 +30,23 @@ public class EventCalendar {
             this.events.add(event);
     }
 
-    public void addEvent(Event e, boolean copy)
+    public void addRef(Event e)
     {
-        if (copy)
-            this.events.add(new Event(e));
-        else
-            this.events.add(e);
+        this.events.add(e);
     }
     
-    // TODO
-    public void eachBetween(LocalDateTime rangeStart, LocalDateTime rangeEnd) {}
-    public void each() {}
-
-    public static void main(String[] args)
+    public void addCopy(Event e)
     {
-
+        this.events.add(new Event(e));
     }
+    
+    public List<Event> getEventList()
+    {
+        return events;
+    }
+    
+    public List<Event> getList()
+    {
+        return events;
+    } 
 }

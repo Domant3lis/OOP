@@ -1,102 +1,162 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
+import java.lang.String;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
+// TODO:
+// - [x] Klasė su be paremetriu konstruktoriu, kur panaudota (this.)
+// - [x] laukai, kuriems priega užtikrinama get/set metodais.
+// Bent vienas laukas turi būti inicijuotas pradine reikšme.
+// - [x] Bent vienas ne statinis metodas
+// - [x] Apibrėžti metodą println(), kuris išveda objekto turinį į išvedimo srautą
+// https://klevas.mif.vu.lt/~rvck/op/paskait/2/Point4.java
+// - [x] Įtraukti į klasės apibrėžimą ir prasmingai panaugoti _static_ bei _final_ elementus
+// - [x] Apibrėžti kitą (testinę klasę), kuri sukurtų pirmosios klasės objetus,
+// jais pasinaudotų, kviesdama metodus, ir išvedinėtų laukų būsenas. 
 public class Event
 {
     private static int eventCount = 0;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    
+    final private LocalDateTime creationDateTime;
+    
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private Duration timeSpan;
+    
     private String title;
     private String description;
 
-    Event(String title, String description, LocalDateTime start, LocalDateTime end) {
+    Event(String title, String desc, LocalDateTime start, LocalDateTime end)
+    {
         eventCount += 1;
         this.title = title;
-        this.description = description;
-        this.startDate = start;
-        this.endDate = end;
-    }
-
-    Event(Event e)
-    {
-        new Event(e.title, e.description, e.startDate, e.endDate);
+        this.description = desc;
+        this.startDateTime = start;
+        this.endDateTime = end;
+        this.creationDateTime = LocalDateTime.now();
+        updateTimeSpan();
     }
     
     Event()
     {
-        new Event(new String("Event #" + (eventCount + 1)), "", LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+        this(new String("Event #" + (eventCount + 1)), "", LocalDateTime.now().plusSeconds(1), LocalDateTime.now().plusHours(1));
     }
-
-    // public Period getPeriod()
-    // {
-    //     return new Period(this.startDate, this.endDate);
-    // }
-
-
-    public int getEventCount()
+    
+    public Event clone()
     {
-        return eventCount;
+        return new Event(this.title, this.description, this.startDateTime, this.endDateTime);
     }
-
-    /**
-     * @return String return the title
-     */
-    public String getTitle() {
-        return title;
+    
+    private void updateTimeSpan()
+    {
+        timeSpan = Duration.between(startDateTime, endDateTime);
     }
-
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
+    
+    static public boolean startDateTimeEquals(Event e0, Event e1)
+    {
+        if (e0.startDateTime.equals(e1.startDateTime))
+            return true;
+        else
+            return false;
     }
-
-    /**
-     * @return String return the description
-     */
-    public String getDescription() {
-        return description;
+    
+    static public boolean endDateTimeEquals(Event e0, Event e1)
+    {
+        if (e0.endDateTime.equals(e1.endDateTime))
+            return true;
+        else
+            return false;
     }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    
+    public String toString()
+    {
+        return new String(
+              "Title: " + title
+            + "\nDescription: " + description 
+            + "\nStart Time: " + startDateTime
+            + "\nEnd time: " + endDateTime 
+            + "\nCreation Time: " + creationDateTime + "\n");
     }
-
-
-    /**
-     * @return Date return the startDate
-     */
-    public LocalDateTime getStartDate() {
-        return startDate;
+    
+    public void println()
+    { 
+        System.out.println(this);
     }
+    
+	public boolean descriptionContains(String match)
+	{
+        return this.description.contains(match);
+	}
+    
+    // Append string to the description
+    public void appendToDescription(String appendix) {
+		this.description = description.concat(appendix);
+	}
+    
+    public void postpone(long amount, TemporalUnit unit)
+    {
+        addTimeToStart(amount, unit);
+        addTimeToEnd(amount, unit);
+    }
+    
+    public void prepone(long amount, TemporalUnit unit)
+    {
+        subTimeFromStart(amount, unit);
+        subTimeFromEnd(amount, unit);
+    }
+    
+    // Time manipulation related methods
+    public void addTimeToStart(long amountToAdd, TemporalUnit unit)
+    {
+        this.startDateTime = this.startDateTime.plus(amountToAdd, unit);
+    }
+    public void addTimeToEnd(long amountToAdd, TemporalUnit unit)
+    {
+        this.endDateTime = this.endDateTime.plus(amountToAdd, unit);
+    }
+    public void subTimeFromStart(long amountToSub, TemporalUnit unit)
+    {
+        this.startDateTime = this.startDateTime.minus(amountToSub, unit);
+    }
+    public void subTimeFromEnd(long amountToSub, TemporalUnit unit)
+    {
+        this.endDateTime = this.endDateTime.minus(amountToSub, unit);
+    }
+    
+    // Bellow getters and setters lay 
+    public LocalDateTime getStartDateTime() { return startDateTime; }
+    public LocalDateTime getEndDateTime() { return endDateTime; }
+    public LocalDateTime getCreationTime() { return creationDateTime; }
+    public Duration getTimeSpan() { return timeSpan; }
+    public String getDescription() { return this.description; }
+    public String getTitle() { return this.title; }
 
-    /**
-     * @param startDate the startDate to set
-     */
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
+    public void setDescription(String description) { this.description = description; }
+    public void setTitle(String title) { this.title = title; }
+    
+    public void setStartDateTime(LocalDateTime dateTime)
+    {
+        this.startDateTime = dateTime;
+        updateTimeSpan();
+    }
+        
+    public void setStartDateTime(int year, int month, int day, int hours, int minutes) 
+    { 
+        this.startDateTime = LocalDateTime.of(year, month, day, hours, minutes);
+        updateTimeSpan();
+    }
+        
+    public void setEndDateTime(LocalDateTime dateTime)
+    {
+        this.endDateTime = dateTime;
+        updateTimeSpan();
+    }
+        
+    public void setEndDateTime(int year, int month, int day, int hours, int minutes)
+    {
+        this.endDateTime = LocalDateTime.of(year, month, day, hours, minutes);
+        updateTimeSpan();
     }
 }
 
-class LocalDateTimeSpan
-{
-    Period per;
-    Duration dur;
-
-    LocalDateTimeSpan(Period per, Duration dur)
-    {
-        this.per = per;
-        this.dur = dur;
-    }
-
-    // PeriodDuration(Period per, Duration dur) {
-    //     this.per = per;
-    //     this.dur = dur;
-    // }
-
-} 
