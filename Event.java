@@ -4,16 +4,6 @@ import java.lang.String;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 
-// TODO:
-// - [x] Klasė su be paremetriu konstruktoriu, kur panaudota (this.)
-// - [x] laukai, kuriems priega užtikrinama get/set metodais.
-// Bent vienas laukas turi būti inicijuotas pradine reikšme.
-// - [x] Bent vienas ne statinis metodas
-// - [x] Apibrėžti metodą println(), kuris išveda objekto turinį į išvedimo srautą
-// https://klevas.mif.vu.lt/~rvck/op/paskait/2/Point4.java
-// - [x] Įtraukti į klasės apibrėžimą ir prasmingai panaugoti _static_ bei _final_ elementus
-// - [x] Apibrėžti kitą (testinę klasę), kuri sukurtų pirmosios klasės objetus,
-// jais pasinaudotų, kviesdama metodus, ir išvedinėtų laukų būsenas. 
 public class Event
 {
     private static int eventCount = 0;
@@ -22,6 +12,8 @@ public class Event
     
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    // TODO:
+    // private TimeSpan timeSpan;
     private Duration timeSpan;
     
     private String title;
@@ -78,16 +70,6 @@ public class Event
             + "\nEnd time: " + endDateTime 
             + "\nCreation Time: " + creationDateTime + "\n");
     }
-    
-    public void println()
-    { 
-        System.out.println(this);
-    }
-    
-	public boolean descriptionContains(String match)
-	{
-        return this.description.contains(match);
-	}
     
     // Append string to the description
     public void appendToDescription(String appendix) {

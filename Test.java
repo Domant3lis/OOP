@@ -4,9 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.temporal.ChronoUnit;
 
+// Pasirinkto projekto kontekste sudaryti klasių hierarchiją
+// bent iš trijų paveldėjimo ryšiais susijusių klasių. Išvestinės klasės privalo:
+// - [x] Pasinaudoti bazinės klasės konstruktoriumi super() bei super-metodu.
+// - [x] Turėti papildomų metodų ir laukų
+// - [ ] Užkloti Object metodą toString() ir dar bent vieną metodą
+// - [ ] Kitos klasės privalo pasinaudoti sukurtų klasių polimorfiniu elgesiu
+// (kviesti užklotus metodus bazinio tipo nuorodai)
+// - [ ] Bazinė klasė privalo turėti metodų, kuriuos draudžiama užkloti
+// - [ ] Visos projekto klasės privalo priklausyti bent 2 skirtingiems paketams
+
+// IDEA:
+// Create a NodeCollection class
+// And extend it with EventCollection (i.e. calendar) and NoteCollection classes
+
 public class Test {
     public static void main(String[] args) throws InterruptedException{
-
 
         Event e0 = new Event();
         Event e1 = new Event(
@@ -16,7 +29,7 @@ public class Test {
             LocalDateTime.of(2022, 03, 20, 4, 30)
         );
         
-        Event.startTimeEquals(e0, e1);
+        Event.startDateTimeEquals(e0, e1);
         
         Event e2 = new Event(
             "Project Foo", 
@@ -40,7 +53,7 @@ public class Test {
         System.out.println(Event.startDateTimeEquals(e1, e2));
         System.out.println(Event.endDateTimeEquals(e1, e2) + "\n");
 
-        el0.stream().forEach( Event::println );
+        el0.stream().forEach( System.out::println );
         System.out.println("------");
         
         e0.addTimeToStart(1, ChronoUnit.YEARS);
@@ -53,7 +66,7 @@ public class Test {
         e2.subTimeFromStart(1, ChronoUnit.MONTHS);
         e3.subTimeFromEnd(10, ChronoUnit.MONTHS);
         
-        el0.stream().forEach( Event::println );
+        el0.stream().forEach( System.out::println );
         System.out.println("------");
         
         for (Event e : el0)
@@ -61,38 +74,40 @@ public class Test {
             e.postpone(2, ChronoUnit.YEARS);
         }
         
-        e1.appendToDescription(" | Appended text");
-        el0.stream().forEach( Event::println );
+        e1.getDescription().concat(" | Appended text");
+        el0.stream().forEach( System.out::println );
         
         String match = new String("important");
         System.out.println(" --- Matches for \"" + match + "\":");
         el0.stream().forEach( e -> {
-            if (e.descriptionContains(match)) 
+            if (e.getDescription().contains(match)) 
                 System.out.println(e);
         });
         
-        // el.stream().forEach( Event::addTimeToStart());
+        el0.stream().forEach( e -> e.addTimeToStart(1, ChronoUnit.SECONDS) );
         // el.stream().forEach( Event::addTimeToEnd);
         // el.stream().forEach( Event::subtractTimeToStart);
         // el.stream().forEach( Event::subtractTimeToEnd);
         
-        // el0.stream().forEach( e -> System.out.println("\n" + e.getTimeSpan()));
+        el0.stream().forEach( e -> System.out.println("\n" + e.getTimeSpan()));
                 
    
-   //      EventCalendar ec0 = new EventCalendar();
-   //      ec0.addRef(e0);
-   //      ec0.addCopy(e0);
-   //      assert (ec0.events.get(0) == e0);
-   //      assert (ec0.events.get(1) != e0);
-   //      assert (ec0.events.get(0).equals(e0));
+        EventCollection ec0 = new EventCollection(new ArrayList<Event>(el0));
+        ec0.addRef(e0);
+        ec0.addCopy(e0);
+        assert (ec0.getList().get(0) == e0);
+        assert (ec0.getList().get(1) != e0);
+        assert (ec0.getList().get(0).equals(e0));
         
-   //      ec0.addRef(e1);
-   //      ec0.addCopy(e2);
+        ec0.addRef(e1);
+        ec0.addCopy(e2);
         
-   //      ec0.getList().stream().forEach(e -> e.println());
+        ec0.getList().stream().forEach(System.out::println);
+        
+        System.out.println(ec0.getEventsStartFrom(LocalDateTime.of(2024, 12, 20, 4, 30)));
 			
-   //      ec0.getList().stream()
-			// .forEach( e -> System.out.println(e.getTimeSpan() + "\n"));
+        // ec0.getList().stream()
+        //     .forEach( e -> System.out.println(((Event)e).getTimeSpan() + "\n"));
 
     }
 }
