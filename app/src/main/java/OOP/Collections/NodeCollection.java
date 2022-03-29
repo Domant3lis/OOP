@@ -1,3 +1,4 @@
+package OOP;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -26,12 +27,6 @@ public class NodeCollection<T>
         this.items.add(i);
     }
     
-    // Getters and setters
-    public List<T> getList()
-    {
-        return items;
-    }
-    
     public List<T> getListFiltered(Predicate<T> filter)
     {
         Stream<T> s = getList().stream();
@@ -39,7 +34,9 @@ public class NodeCollection<T>
         return ret;
     }
     
-    // public List<Event> getEventsTill(LocalTimeDate till)
-    // public List<Event> getEventsTimeRange(LocalTimeDate from, LocalTimeDate till)
-
+    // Getters and setters
+    public List<T> getList()
+    {
+        return items;
+    }
 }

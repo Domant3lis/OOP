@@ -1,24 +1,14 @@
 // Personalinė užrašų sistema: adresai, užrašai, darbai, kalendorius
+package OOP;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.temporal.ChronoUnit;
 
-// Pasirinkto projekto kontekste sudaryti klasių hierarchiją
-// bent iš trijų paveldėjimo ryšiais susijusių klasių. Išvestinės klasės privalo:
-// - [x] Pasinaudoti bazinės klasės konstruktoriumi super() bei super-metodu.
-// - [x] Turėti papildomų metodų ir laukų
-// - [ ] Užkloti Object metodą toString() ir dar bent vieną metodą
-// - [ ] Kitos klasės privalo pasinaudoti sukurtų klasių polimorfiniu elgesiu
-// (kviesti užklotus metodus bazinio tipo nuorodai)
-// - [ ] Bazinė klasė privalo turėti metodų, kuriuos draudžiama užkloti
-// - [ ] Visos projekto klasės privalo priklausyti bent 2 skirtingiems paketams
-
 // IDEA:
 // Create a NodeCollection class
 // And extend it with EventCollection (i.e. calendar) and NoteCollection classes
-
-public class Test {
+public class App {
     public static void main(String[] args) throws InterruptedException{
 
         Event e0 = new Event();
@@ -104,10 +94,11 @@ public class Test {
         
         ec0.getList().stream().forEach(System.out::println);
         
-        System.out.println(ec0.getEventsStartFrom(LocalDateTime.of(2024, 12, 20, 4, 30)));
+        // Errors out:
+        System.out.println(ec0.getEventsAfterStart(LocalDateTime.of(2024, 12, 20, 4, 30)));
 			
-        // ec0.getList().stream()
-        //     .forEach( e -> System.out.println(((Event)e).getTimeSpan() + "\n"));
+        ec0.getList().stream()
+            .forEach( e -> System.out.println(((Event)e).getTimeSpan() + "\n"));
 
     }
 }
