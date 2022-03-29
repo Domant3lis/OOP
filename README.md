@@ -4,7 +4,7 @@ University OOP course.
 ## Semester task
 Personal note system: addresses, notes, tasks, calendar.
 
-### Task I.2 (Commit: Domant3lis/OOP@76e31a1ebd47f95580a41a1a66da943a763ebb8a)
+### [Task I.2](https://github.com/Domant3lis/OOP/commit/8c739fac20d0ae6f54b1837485689685ea0bdb0b)
 - [x] konstruktoriai, iš kurių vieną beargumentis, panaudoti this() konstrukciją
 - [x] laukai, kuriems priega užtikrinama get/set metodais. Bent vienas laukas turi būti inicijuotas pradine reikšme.
 - [x] (nestatinius) metodus. Bent vienas metodas turi būti perkrautas (overloaded)
