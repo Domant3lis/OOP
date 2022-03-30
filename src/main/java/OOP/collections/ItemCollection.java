@@ -1,4 +1,5 @@
-package OOP;
+package OOP.collections;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -6,23 +7,19 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class NodeCollection<T>
+public class ItemCollection<T>
 {
+    // TODO: Add somesort of aditional field
 	protected List <T> items;
 	
 	// Constructors
-	public NodeCollection() { items = new ArrayList<T>(); }
-	public NodeCollection(List<T> items) { this.items = items; }
-    
-    // New `NodeCollection` is created with `item` taken as a referance
-    public NodeCollection(T item)
-    {
-        this();
-        this.items.add(item);
-    }
+	public ItemCollection() { items = new ArrayList<T>(); }
+	public ItemCollection(List<T> items) { this.items = items; }
+    // New `ItemCollection` is created with `item` taken as a referance
+	public ItemCollection(T item) { super(); items.add(item); }
     
     // Non-static methods
-    public void addRef(T i)
+    final public void addRef(T i)
     {
         this.items.add(i);
     }

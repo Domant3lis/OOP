@@ -1,4 +1,5 @@
-package OOP;
+package OOP.collections;
+import OOP.items.Event;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +7,41 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EventCollection extends NodeCollection {
+public class EventCollection extends ItemCollection {
     
-    public EventCollection(List<Event> items) { super(items); }
+    private LocalDateTime earliestEventDateTime;
+    private LocalDateTime latestEventDateTime;
     
-    public void addCopy(Event e) { this.items.add(e.clone()); }
+    // public EventCollection() { super(); }
+    public EventCollection(List<Event> events)
+    {
+        super(events);
+        updateEarliestLatestDateTime();
+    }
+    
+    public void addCopy(Event e)
+    {
+        this.items.add(e.clone());
+        updateEarliestLatestDateTime();
+    }
+    
+    private void updateEarliestLatestDateTime()
+    {
+        LocalDateTime ear = ((Event) getList().get(0)).getStartDateTime();
+        LocalDateTime late = ((Event) getList().get(0)).getStartDateTime();
+        
+        for (Object o : getList().subList(1, getList().size() -1))
+        {
+            Event e = (Event) o; 
+            if ( e.getStartDateTime().isBefore(ear) )
+                ear = e.getStartDateTime();
+            else if ( e.getStartDateTime().isAfter(late) )
+                late = e.getEndDateTime();
+        }
+        
+        earliestEventDateTime = ear;
+        latestEventDateTime = late;
+    }
     
     // TODO:
     // public List<Event> getFilteredEventsDescription(String filter)

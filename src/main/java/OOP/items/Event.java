@@ -1,39 +1,32 @@
-package OOP;
+package OOP.items;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.lang.String;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 
-public class Event
+public class Event extends Item
 {
-    private static int eventCount = 0;
-    
-    final private LocalDateTime creationDateTime;
-    
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    // TODO:
+    // TODO: Switch to TimeSpan for time duration
     // private TimeSpan timeSpan;
     private Duration timeSpan;
-    
-    private String title;
-    private String description;
 
-    Event(String title, String desc, LocalDateTime start, LocalDateTime end)
+    public Event(String title, String desc, LocalDateTime start, LocalDateTime end)
     {
-        eventCount += 1;
-        this.title = title;
-        this.description = desc;
+        super(title, desc);
         this.startDateTime = start;
         this.endDateTime = end;
-        this.creationDateTime = LocalDateTime.now();
         updateTimeSpan();
     }
     
-    Event()
+    public Event()
     {
-        this(new String("Event #" + (eventCount + 1)), "", LocalDateTime.now().plusSeconds(1), LocalDateTime.now().plusHours(1));
+        super(new String("Event #" + (itemCount + 1)), "");
+        this.startDateTime = LocalDateTime.now();
+        this.endDateTime = LocalDateTime.now();
     }
     
     public Event clone()
@@ -44,22 +37,6 @@ public class Event
     private void updateTimeSpan()
     {
         timeSpan = Duration.between(startDateTime, endDateTime);
-    }
-    
-    static public boolean startDateTimeEquals(Event e0, Event e1)
-    {
-        if (e0.startDateTime.equals(e1.startDateTime))
-            return true;
-        else
-            return false;
-    }
-    
-    static public boolean endDateTimeEquals(Event e0, Event e1)
-    {
-        if (e0.endDateTime.equals(e1.endDateTime))
-            return true;
-        else
-            return false;
     }
     
     public String toString()
@@ -110,13 +87,7 @@ public class Event
     // Bellow getters and setters lay 
     public LocalDateTime getStartDateTime() { return startDateTime; }
     public LocalDateTime getEndDateTime() { return endDateTime; }
-    public LocalDateTime getCreationTime() { return creationDateTime; }
     public Duration getTimeSpan() { return timeSpan; }
-    public String getDescription() { return this.description; }
-    public String getTitle() { return this.title; }
-
-    public void setDescription(String description) { this.description = description; }
-    public void setTitle(String title) { this.title = title; }
     
     public void setStartDateTime(LocalDateTime dateTime)
     {
