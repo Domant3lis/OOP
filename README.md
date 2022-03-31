@@ -4,6 +4,10 @@ University OOP course.
 ## Semester task
 Personal note system: addresses, notes, tasks, calendar.
 
+This project uses maven build system.
+
+To build and run: `mvn complie exec:java`
+
 ### [Task I.2](https://github.com/Domant3lis/OOP/commit/8c739fac20d0ae6f54b1837485689685ea0bdb0b)
 - [x] konstruktoriai, iš kurių vieną beargumentis, panaudoti this() konstrukciją
 - [x] laukai, kuriems priega užtikrinama get/set metodais. Bent vienas laukas turi būti inicijuotas pradine reikšme.
