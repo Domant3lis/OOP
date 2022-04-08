@@ -16,7 +16,7 @@ To build and run: `mvn complie exec:java`
 - [x] Įtraukti į klasės apibrėžimą ir prasmingai panaugoti static bei final elementus
 - [x] Apibrėžti kitą (testinę klasę), kuri sukurtų pirmosios klasės objetus, jais pasinaudotų, kviesdama metodus, ir išvedinėtų laukų būsenas.
 
-### Task II.1
+### [Task II.1](https://github.com/Domant3lis/OOP/commit/d2159281d74772ba2e6aba5ac209bc0246eba340)
 Išvestinės klasės privalo:
 - [X] Pasinaudoti _bazinės klasės_ konstruktoriumi super() 
 	- [X] bei super-metodu.
