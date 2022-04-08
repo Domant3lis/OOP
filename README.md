@@ -2,7 +2,7 @@
 University OOP course.
 
 ## Semester task
-Personal note system: addresses, notes, tasks, calendar.
+4. Personal note system: addresses, notes, tasks, calendar.
 
 This project uses maven build system.
 
@@ -17,10 +17,13 @@ To build and run: `mvn complie exec:java`
 - [x] Apibrėžti kitą (testinę klasę), kuri sukurtų pirmosios klasės objetus, jais pasinaudotų, kviesdama metodus, ir išvedinėtų laukų būsenas.
 
 ### Task II.1
-- [ ] Pasinaudoti bazinės klasės konstruktoriumi super() bei super-metodu.
-- [x] Turėti papildomų metodų ir laukų
-- [ ] Užkloti Object metodą toString() ir dar bent vieną metodą
-- [ ] Kitos klasės privalo pasinaudoti sukurtų klasių polimorfiniu elgesiu (kviesti užklotus metodus bazinio tipo nuorodai)
-- [x] Bazinė klasė privalo turėti metodų, kuriuos draudžiama užkloti
-- [x] Visos projekto klasės privalo priklausyti bent 2 skirtingiems paketams
+Išvestinės klasės privalo:
+- [X] Pasinaudoti _bazinės klasės_ konstruktoriumi super() 
+	- [X] bei super-metodu.
+- [X] Turėti papildomų metodų ir laukų
+- [X] Užkloti Object metodą toString() ir dar bent vieną metodą
+- [X] Kitos klasės privalo pasinaudoti sukurtų klasių polimorfiniu elgesiu
+	(kviesti užklotus metodus bazinio tipo nuorodai)
+- [X] Bazinė klasė privalo turėti metodų, kuriuos draudžiama užkloti
+- [X] Visos projekto klasės privalo priklausyti bent 2 skirtingiems paketams
 

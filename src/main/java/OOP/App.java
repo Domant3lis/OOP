@@ -1,113 +1,69 @@
 // Personalinė užrašų sistema: adresai, užrašai, darbai, kalendorius
 package OOP;
-import OOP.collections.EventCollection;
-import OOP.items.Event;
+import items.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
+import java.util.regex.Pattern;
 
-// IDEA:
-// Create a NodeCollection class
-// And extend it with EventCollection (i.e. calendar) and NoteCollection classes
 public class App {
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) {
 
-        // Event e0 = new Event();
-        Event e0 = new Event(
-            "Meeting", 
+        Event e0 = new Event("Project Foo", 
             "Very important", 
-            LocalDateTime.now().plusMinutes(1), 
-            LocalDateTime.of(2022, 03, 20, 4, 30)
-        );
-        Event e1 = new Event(
-            "Meeting", 
-            "Very important", 
-            LocalDateTime.now().plusMinutes(1), 
-            LocalDateTime.of(2022, 03, 20, 4, 30)
+            LocalDateTime.now().plusSeconds(3), 
+            LocalDateTime.of(2022, 04, 15, 16, 00)
         );
         
-        assert(e0.getStartDateTime().equals(e1.getStartDateTime()) != true);
+        Event e1 = new Event("Project Bar", 
+            "Somewhat important", 
+            LocalDateTime.now().plusSeconds(3), 
+            LocalDateTime.of(2022, 04, 16, 16, 00)
+        );
+        e1.postpone(1, ChronoUnit.SECONDS);
         
         Event e2 = new Event(
-            "Project Foo", 
+            "Project FooBar", 
             "Less important", 
             LocalDateTime.now().plusSeconds(3), 
-            LocalDateTime.of(2022, 04, 20, 16, 00)
+            LocalDateTime.of(2022, 04, 17, 16, 00)
         );
-         
-        e2.setEndDateTime(e2.getEndDateTime().plusYears(1));
-        
-        Event e3 = e2.clone();
 
-        List<Event> el0 = new ArrayList<Event>();
+        List<Note> nl0 = new ArrayList<Note>();
         
-        el0.add(e0);
-        el0.add(e1);
-        el0.add(e2);
-        el0.add(e3);
+        nl0.add(e0);
+        nl0.add(e1);
+        nl0.add(e2);
         
-        el0.stream().forEach( System.out::println );
-        System.out.println("------");
-        
-        e0.addTimeToStart(1, ChronoUnit.YEARS);
-        e1.addTimeToStart(1, ChronoUnit.DAYS);
-        e2.addTimeToStart(1, ChronoUnit.SECONDS);
-        e3.addTimeToEnd(2000, ChronoUnit.YEARS);
-        
-        e0.subTimeFromStart(1, ChronoUnit.SECONDS);
-        e1.subTimeFromStart(1, ChronoUnit.MONTHS);
-        e2.subTimeFromStart(1, ChronoUnit.MONTHS);
-        e3.subTimeFromEnd(10, ChronoUnit.MONTHS);
-        
-        el0.stream().forEach( System.out::println );
-        System.out.println("------");
-        
-        for (Event e : el0)
-        {
-            e.postpone(2, ChronoUnit.YEARS);
-        }
-        
-        e1.getDescription().concat(" | Appended text");
-        el0.stream().forEach( System.out::println );
+        e1.appendToDescription(" | Appended text");
         
         String match = new String("important");
         System.out.println(" --- Matches for \"" + match + "\":");
-        el0.stream().forEach( e -> {
-            if (e.getDescription().contains(match)) 
-                System.out.println(e);
+        nl0.stream().forEach( n -> {
+            if (n.contains(match))
+                System.out.println("\n" + n);
         });
+
+        Note c0 = new Contact("Mom", "", "Vardenė Pavardenė", "+370 603 03030", "mom@examaple.com", LocalDateTime.of(1965, 8, 7, 12, 13, 14) );
+        nl0.add(c0);
         
-        el0.stream().forEach( e -> e.addTimeToStart(1, ChronoUnit.SECONDS) );
-        // el.stream().forEach( Event::addTimeToEnd);
-        // el.stream().forEach( Event::subtractTimeToStart);
-        // el.stream().forEach( Event::subtractTimeToEnd);
+        Note c1 = new Contact("BFF", "", "Vardenis Pavardenis", "+370 602 02020", "bff@examaple.com", LocalDateTime.of(1999, 8, 7, 12, 13, 14));
+        nl0.add(c1);
         
-        el0.stream().forEach( e -> System.out.println("\n" + e.getTimeSpan()));
-                
-   
-        // EventCollection ec0 = new EventCollection(new ArrayList<Event>(el0));
-        // ec0.addRef(e0);
-        // ec0.addCopy(e0);
-        // assert (ec0.getList().get(0) == e0);
-        // assert (ec0.getList().get(1) != e0);
-        // assert (ec0.getList().get(0).equals(e0));
+        nl0.add(c1);
+        ((Contact) c1).setCustom("Likes", "Apples, Oranges");
+        ((Contact) c1).setCustom("Dislikes", "Bananas");
+        // ((Contact) c1).writeEmail();
+
+        Pattern reg = Pattern.compile("2022-04-17");
         
-        // ec0.addRef(e1);
-        // ec0.addCopy(e2);
-        
-        // ec0.getList().stream().forEach(System.out::println);
-        
-        // System.out.println(ec0.getEventsAfterStart(LocalDateTime.of(2024, 12, 20, 4, 30)));
-			
-        // ec0.getList().stream()
-        //     .forEach( e -> System.out.println(((Event)e).getTimeSpan() + "\n"));
-        
-        // EventCollection ec1 = new EventCollection();
-        
-        // Item item = new Item();
-        
-        // Note note = new Note();
+        System.out.print("\nREGEX:\n");
+        nl0.forEach(n -> { if(n.contains(reg)) { System.out.println("\n" + n); } });
+
+        System.out.println("\nALL ITEMS:\n");
+        // il0.stream().forEach( System.out::println );
+        nl0.stream().forEach( n -> { System.out.println(n + "\n"); } );
     }
 }
 
