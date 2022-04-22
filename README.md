@@ -27,7 +27,7 @@ Išvestinės klasės privalo:
 - [X] Bazinė klasė privalo turėti metodų, kuriuos draudžiama užkloti
 - [X] Visos projekto klasės privalo priklausyti bent 2 skirtingiems paketams
 
-### Task II.2
+### [Task II.2](https://github.com/Domant3lis/OOP/commit/162cbbaca7d91ecf85fedbfc4a15a578bf786326)
 - [x] Sukurti (netuščią) interfeisą (ar panaudoti jau egzistuojantį - standartinį), išreiškiantį kurios nors parašytos klasės funkcionavimo aspektą.
 - [x] Interfeisą išplėsti (extends) kitu. 
 - [x] Šį realizuoti abstrakčiąja klase, o pastarąją - konkrečiąja. 
