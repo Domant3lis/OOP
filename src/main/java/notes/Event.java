@@ -1,4 +1,4 @@
-package items;
+package notes;
 
 import java.lang.String;
 import java.time.Duration;
@@ -12,12 +12,17 @@ public class Event extends Note
 	private LocalDateTime endDateTime;
 
     public Event(String title, String desc, LocalDateTime start, LocalDateTime end)
+        throws StartAfterEndException
     {
         super(title, desc);
+
+        if (start.isAfter(end))
+            throw new StartAfterEndException(start, end);
+
         this.startDateTime = start;
         setEndDateTime(end);
     }
-    
+
     @Override
     public String toString()
     {
@@ -28,17 +33,25 @@ public class Event extends Note
         );
         return ret.concat(concat);
     }
+
+    @Override
+    public Event clone() throws CloneNotSupportedException
+    {
+        Event clone = (Event) super.clone();
+
+        return clone;
+    }
     
     public void postpone(long amount, TemporalUnit unit)
     {
-        addTimeToStart(amount, unit);
         addTimeToEnd(amount, unit);
+        try {addTimeToStart(amount, unit);} catch (Exception e){}
     }
     
     public void prepone(long amount, TemporalUnit unit)
     {
         subTimeFromStart(amount, unit);
-        subTimeFromEnd(amount, unit);
+        try {subTimeFromEnd(amount, unit);} catch (Exception e){}
     }
 
     public boolean timeConflicts(LocalDateTime time)
@@ -52,8 +65,13 @@ public class Event extends Note
 
     // Time related methods
     public void addTimeToStart(long amountToAdd, TemporalUnit unit)
+        throws StartAfterEndException
     {
-        this.startDateTime = this.startDateTime.plus(amountToAdd, unit);
+        LocalDateTime newTime = this.startDateTime.plus(amountToAdd, unit);
+        if (newTime.isAfter(this.endDateTime))
+            throw new StartAfterEndException(newTime, this.endDateTime);
+        
+        this.startDateTime = newTime;
     }
     
     public void subTimeFromStart(long amountToSub, TemporalUnit unit)
@@ -63,13 +81,24 @@ public class Event extends Note
 
     public void addTimeToEnd(long amountToAdd, TemporalUnit unit)
         { this.endDateTime = this.endDateTime.plus(amountToAdd, unit); }
+    
     public void subTimeFromEnd(long amountToSub, TemporalUnit unit)
-        { this.endDateTime = this.endDateTime.minus(amountToSub, unit); }
+        throws StartAfterEndException
+    {
+        LocalDateTime newTime = this.endDateTime.minus(amountToSub, unit);
+        if (newTime.isBefore(this.endDateTime))
+            throw new StartAfterEndException(this.startDateTime, newTime);
+        
+        this.endDateTime = newTime;
+    }
 
     @Override
-    public boolean contains(String match)
+    public boolean contentContains(String match)
     {
-        if (super.contains(match))
+        if (titleContains(match))
+            return true;
+        
+        if (descriptionContains(match))
             return true;
         
         if(this.startDateTime.toString().contains(match))
@@ -82,9 +111,12 @@ public class Event extends Note
     }
 
     @Override
-    public boolean contains(Pattern regex)
-    {
-        if (super.contains(regex))
+    public boolean contentContains(Pattern regex)
+    {        
+        if (titleContains(regex))
+            return true;
+
+        if (descriptionContains(regex))
             return true;
         
         if (regex.matcher(this.startDateTime.toString()).find())
@@ -96,12 +128,17 @@ public class Event extends Note
         return false;
     }
 
+    public void appendToContent(String appendix)
+    {
+        setDescription(getDescription().concat(appendix));
+    }
+
     public Duration getDuration() { return Duration.between(startDateTime, getEndDateTime()); }
     
     // Bellow getters and setters lay 
     public LocalDateTime getStartDateTime() { return startDateTime; }
     public LocalDateTime getEndDateTime() { return endDateTime; }
-    
+
     public void setStartDateTime(LocalDateTime dateTime) { this.startDateTime = dateTime; }
     public void setStartDateTime(int year, int month, int day, int hours, int minutes) 
         { this.startDateTime = LocalDateTime.of(year, month, day, hours, minutes); }

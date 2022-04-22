@@ -1,4 +1,4 @@
-package items;
+package notes;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ public class Contact extends Note
     private HashMap<String, String> fields = new LinkedHashMap<String, String>();
     private LocalDateTime birthday;
 
-    public Contact(String title, String desc, String fullName, String phoneNumber, String email, LocalDateTime birthday)
+    public Contact(String title, String description, String fullName, String phoneNumber, String email, LocalDateTime birthday)
     {
-        super(title, desc);
+        super(title, description);
         setFullName(fullName);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -38,9 +38,21 @@ public class Contact extends Note
     }
 
     @Override
-    public boolean contains(String match)
+    public Contact clone() throws CloneNotSupportedException
     {
-        if (super.contains(match))
+        Contact clone = (Contact) super.clone();
+
+        for (String key : this.fields.keySet()) {
+            clone.setCustom(key, this.fields.get(key));
+        }
+
+        return clone;
+    }
+
+    @Override
+    public boolean contentContains(String match)
+    {
+        if (titleContains(match) || descriptionContains(match))
             return true;
 
         if (this.birthday != null && this.birthday.toString().contains(match))
@@ -50,9 +62,9 @@ public class Contact extends Note
     }
 
     @Override
-    public boolean contains(Pattern regex)
+    public boolean contentContains(Pattern regex)
     {
-        if (super.contains(regex))
+        if (titleContains(regex) || descriptionContains(regex))
             return true;
         
         if (this.birthday != null && regex.matcher(this.birthday.toString()).find())
@@ -76,6 +88,7 @@ public class Contact extends Note
 
     public void writeEmail()
     {
+        // Exception place
         Scanner scanner = new Scanner(System.in);
         String appendix = "mailto:" + getEmail();
 
@@ -85,6 +98,11 @@ public class Contact extends Note
         System.out.println("Write Body line: ");
         String body = scanner.nextLine();
         System.out.println("Use this link in your browser: " + appendix + "?subject=" + subjectLine + "&body=" + body);
+    }
+
+    public void appendToContent(String appendix)
+    {
+        this.fields.put("Custom Field", appendix);
     }
     
     // Only getters and setters below

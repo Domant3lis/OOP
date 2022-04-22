@@ -6,7 +6,7 @@ University OOP course.
 
 This project uses maven build system.
 
-To build and run: `mvn complie exec:java`
+To build and run: `mvn compile exec:java`
 
 ### [Task I.2](https://github.com/Domant3lis/OOP/commit/8c739fac20d0ae6f54b1837485689685ea0bdb0b)
 - [x] konstruktoriai, iš kurių vieną beargumentis, panaudoti this() konstrukciją
@@ -27,3 +27,19 @@ Išvestinės klasės privalo:
 - [X] Bazinė klasė privalo turėti metodų, kuriuos draudžiama užkloti
 - [X] Visos projekto klasės privalo priklausyti bent 2 skirtingiems paketams
 
+### Task II.2
+- [x] Sukurti (netuščią) interfeisą (ar panaudoti jau egzistuojantį - standartinį), išreiškiantį kurios nors parašytos klasės funkcionavimo aspektą.
+- [x] Interfeisą išplėsti (extends) kitu. 
+- [x] Šį realizuoti abstrakčiąja klase, o pastarąją - konkrečiąja. 
+Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi remti kiek įmanoma abstraktesne klase (interfeisu). Galite panaudoti jau egzistuojančią klasių hierarchiją.
+
+### Task III.1
+- [x] Apibrėžti bazinę išimties klasę savo projektui, išvestą iš Exception.
+- [x] Apibrėžti išvestinę išimties klasę su patikslinančiąja informaciją.
+- [x] Kitos klasės metodams deklaruoti (throws) metamas išimtis ir esant neteisingam kreipiniui jas iššaukti (throw).
+- [x] Testinėje (main) programos klasėje gaudyti metamas išimtis, parūpinant vartotoją diagnostine informacija.
+
+### Task III.2
+- [x] Parinkti bent vieną klasę, kurios objektą būtų prasminga klonuoti ir paruošti (giliam) klonavimui.
+- [x] Kitoje klasėje klonavimą prasmingai panaudoti.
+- [x] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų.
