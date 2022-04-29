@@ -98,6 +98,7 @@ public class Contact extends Note
         System.out.println("Write Body line: ");
         String body = scanner.nextLine();
         System.out.println("Use this link in your browser: " + appendix + "?subject=" + subjectLine + "&body=" + body);
+        scanner.close();
     }
 
     public void appendToContent(String appendix)
