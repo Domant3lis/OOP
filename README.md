@@ -32,8 +32,8 @@ Išvestinės klasės privalo:
 - [x] Interfeisą išplėsti (extends) kitu. 
 - [x] Šį realizuoti abstrakčiąja klase, o pastarąją - konkrečiąja. 
 Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi remti kiek įmanoma abstraktesne klase (interfeisu). Galite panaudoti jau egzistuojančią klasių hierarchiją.
-
-### Task III.1
+0c517407792a559254541f6f6420853efe8ae92f
+### [Task III.1](https://github.com/Domant3lis/OOP/commit/0c517407792a559254541f6f6420853efe8ae92f)
 - [x] Apibrėžti bazinę išimties klasę savo projektui, išvestą iš Exception.
 - [x] Apibrėžti išvestinę išimties klasę su patikslinančiąja informaciją.
 - [x] Kitos klasės metodams deklaruoti (throws) metamas išimtis ir esant neteisingam kreipiniui jas iššaukti (throw).
@@ -42,4 +42,4 @@ Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi r
 ### Task III.2
 - [x] Parinkti bent vieną klasę, kurios objektą būtų prasminga klonuoti ir paruošti (giliam) klonavimui.
 - [x] Kitoje klasėje klonavimą prasmingai panaudoti.
-- [x] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų.
+- [ ] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų.
