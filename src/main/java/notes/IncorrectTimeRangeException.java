@@ -2,7 +2,7 @@ package notes;
 
 import java.time.LocalDateTime;
 
-public class IncorrectTimeRangeException extends IncorrectArgumentException {
+public class IncorrectTimeRangeException extends IllegalArgumentException {
 
     LocalDateTime start;
     LocalDateTime end;

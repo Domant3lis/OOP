@@ -26,8 +26,8 @@ public abstract class Note implements TimedSearchable, Cloneable {
 
     public Note clone() throws CloneNotSupportedException {
         Note newNote = (Note) super.clone();
-        newNote.title = new String(this.title);
-        newNote.description = new String(this.description);
+        // newNote.title = new String(this.title);
+        // newNote.description = new String(this.description);
 
         return newNote;
     }

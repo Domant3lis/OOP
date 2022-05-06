@@ -11,11 +11,11 @@ public class Event extends Note {
     private LocalDateTime endDateTime;
 
     public Event(String title, String desc, LocalDateTime start, LocalDateTime end)
-            throws IncorrectArgumentException {
+            throws IllegalArgumentException {
         super(title, desc);
 
         if (start == null || end == null)
-            throw new IncorrectArgumentException("Neither start, nor end datetime should be null");
+            throw new IllegalArgumentException("Neither start, nor end datetime should be null");
 
         if (start.isAfter(end)) {
             throw new IncorrectTimeRangeException(start, end);
@@ -41,22 +41,22 @@ public class Event extends Note {
         return clone;
     }
 
+    // Move both start and end dateTimes by the same amount
+    // To prepone amount must be negative
     public void postpone(long amount, TemporalUnit unit) {
         try {
             addTimeToEnd(amount, unit);
             addTimeToStart(amount, unit);
         } catch (Exception e) {
+            // since addTimeToStart may throw an exception
+            // if startDateTime happens to be before endDateTime
+            // this does not need to handled since both times
+            // are moved by the same amount
         }
     }
 
-    public void prepone(long amount, TemporalUnit unit) {
-        try {
-            subTimeFromStart(amount, unit);
-            subTimeFromEnd(amount, unit);
-        } catch (Exception e) {
-        }
-    }
-
+    // Shows if specified time falls between
+    // start and end time of this Event
     public boolean timeConflicts(LocalDateTime time) {
         // startDateTime < time < endDateTime
         if (startDateTime.isAfter(time) && endDateTime.isBefore(time))
@@ -66,12 +66,9 @@ public class Event extends Note {
     }
 
     // Time related methods
+    // to subtract time amountToAdd should be negative
     public void addTimeToStart(long amountToAdd, TemporalUnit unit)
-            throws IncorrectTimeRangeException, IncorrectArgumentException {
-
-        if (amountToAdd < 0)
-            throw new IncorrectArgumentException(
-                    "amountToAdd should be positive, use subTimeFromStart to subtract time");
+            throws IncorrectTimeRangeException {
 
         LocalDateTime newTime = this.startDateTime.plus(amountToAdd, unit);
         if (newTime.isAfter(this.endDateTime))
@@ -80,23 +77,13 @@ public class Event extends Note {
         this.startDateTime = newTime;
     }
 
-    public void subTimeFromStart(long amountToSub, TemporalUnit unit)
-            throws IncorrectArgumentException {
-        if (amountToSub < 0)
-            throw new IncorrectArgumentException("amountToSub should be positive");
-
-        this.startDateTime = this.startDateTime.minus(amountToSub, unit);
-    }
-
-    public void addTimeToEnd(long amountToAdd, TemporalUnit unit) {
-        this.endDateTime = this.endDateTime.plus(amountToAdd, unit);
-    }
-
-    public void subTimeFromEnd(long amountToSub, TemporalUnit unit)
-            throws IncorrectTimeRangeException {
-
-        LocalDateTime newTime = this.endDateTime.minus(amountToSub, unit);
-        if (newTime.isBefore(this.endDateTime))
+    // Time related methods
+    // to subtract time amountToAdd should be negative
+    public void addTimeToEnd(long amountToAdd, TemporalUnit unit) 
+        throws IncorrectTimeRangeException {
+        
+        LocalDateTime newTime = this.endDateTime.plus(amountToAdd, unit);
+        if (newTime.isBefore(this.startDateTime))
             throw new IncorrectTimeRangeException(this.startDateTime, newTime);
 
         this.endDateTime = newTime;

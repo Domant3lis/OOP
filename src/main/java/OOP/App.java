@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.lang.IllegalArgumentException;
 
 public class App {
     public static void main(String[] args) {
@@ -76,36 +77,35 @@ public class App {
             System.out.println("\nALL ITEMS:\n");
             // il0.stream().forEach( System.out::println );
 
-            Event medicine0 = new Event("Take medicine", "Brandanol 5mg", LocalDateTime.now(), LocalDateTime.now());
+            Todo t0 = new Todo("Take medicine", "Brandanol 5mg", LocalDateTime.now());
 
-            Event medicine1 = medicine0.clone();
-            Event medicine2 = medicine0.clone();
-            Event medicine3 = medicine0.clone();
+            t0.appendToContent("After breakfast");
+            t0.appendToContent("After lunch");
+            t0.appendToContent("After diner");
 
-            medicine1.postpone(1, ChronoUnit.DAYS);
-            medicine2.postpone(2, ChronoUnit.DAYS);
-            medicine3.postpone(3, ChronoUnit.DAYS);
-            medicine3.setDescription("Brandanol 10mg");
-            nl0.add(medicine0);
-            nl0.add(medicine1);
-            nl0.add(medicine2);
-            nl0.add(medicine3);
-            nl0.stream().forEach(n -> {
-                System.out.println(n + "\n");
-            });
+            Todo t1 = t0.clone();
+            Todo t2 = t0.clone();
+            Todo t3 = t0.clone();
 
-            // Event ex0 = new Event("title", "desc", LocalDateTime.now(),
-            // LocalDateTime.now().minusSeconds(1));
+            t1.postpone(1, ChronoUnit.DAYS);
+            t2.postpone(2, ChronoUnit.DAYS);
+            t3.postpone(3, ChronoUnit.DAYS);
 
-            Event ex1 = new Event("title", "desc", null, null);
+            t3.setDescription("Brandanol 2.5 mg");
+            t3.appendToTitle(" | Last DAY! :)");
+            t3.appendToContent("Before sleep");
+            t3.removeAction("After breakfast");
+            t3.removeAction(1);
 
-            // This never gets executed since previous statement throws an exception
-            // System.out.println(ex0);
-            // System.out.println(ex1);
+            nl0.add(t0);
+            nl0.add(t1);
+            nl0.add(t2);
+            nl0.add(t3);
+            nl0.stream().forEach(n -> { System.out.println(n + "\n"); });
 
         } catch (IncorrectTimeRangeException te) {
             System.out.println(te);
-        } catch (IncorrectArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e);
         } catch (CloneNotSupportedException ce) {
             System.out.println(ce);
