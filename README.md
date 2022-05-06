@@ -33,13 +33,14 @@ Išvestinės klasės privalo:
 - [x] Šį realizuoti abstrakčiąja klase, o pastarąją - konkrečiąja. 
 Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi remti kiek įmanoma abstraktesne klase (interfeisu). Galite panaudoti jau egzistuojančią klasių hierarchiją.
 0c517407792a559254541f6f6420853efe8ae92f
+
 ### [Task III.1](https://github.com/Domant3lis/OOP/commit/0c517407792a559254541f6f6420853efe8ae92f)
 - [x] Apibrėžti bazinę išimties klasę savo projektui, išvestą iš Exception.
 - [x] Apibrėžti išvestinę išimties klasę su patikslinančiąja informaciją.
 - [x] Kitos klasės metodams deklaruoti (throws) metamas išimtis ir esant neteisingam kreipiniui jas iššaukti (throw).
 - [x] Testinėje (main) programos klasėje gaudyti metamas išimtis, parūpinant vartotoją diagnostine informacija.
 
-### Task III.2
+### [Task III.2](https://github.com/Domant3lis/OOP/commit/93f7ec7d4fcf8c71f5fef37ebb31f9ea906a9bcc)
 - [x] Parinkti bent vieną klasę, kurios objektą būtų prasminga klonuoti ir paruošti (giliam) klonavimui.
 - [x] Kitoje klasėje klonavimą prasmingai panaudoti.
-- [ ] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų.
+- [x] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų (**prototipo**, metodo-gamyklos, abstrakčiosios gamyklos).
