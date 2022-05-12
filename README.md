@@ -4,9 +4,9 @@ University OOP course.
 ## Semester task
 4. Personal note system: addresses, notes, tasks, calendar.
 
-This project uses maven build system.
+This project uses Java 18, JavaFX 18 and Maven build system.
 
-To build and run: `mvn compile exec:java`
+To build and run: `mvn compile javafx:run`
 
 ### [Task I.2](https://github.com/Domant3lis/OOP/commit/8c739fac20d0ae6f54b1837485689685ea0bdb0b)
 - [x] konstruktoriai, iš kurių vieną beargumentis, panaudoti this() konstrukciją
@@ -44,3 +44,10 @@ Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi r
 - [x] Parinkti bent vieną klasę, kurios objektą būtų prasminga klonuoti ir paruošti (giliam) klonavimui.
 - [x] Kitoje klasėje klonavimą prasmingai panaudoti.
 - [x] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų (**prototipo**, metodo-gamyklos, abstrakčiosios gamyklos).
+
+### Task IIII.1
+- [ ] Suteikti programai galimybę išsaugoti duomenis/būseną/nuostatas faile binariniu pavidalu ir nuskaityti iš failo.
+- [ ] Vykdyti šiuos veiksmus atskiroje gijoje (arba gijas panaudoti kitiems poreikiams).
+- [ ] Duomenų skaitymui rašymui naudoti DataInput/Output/Stream (jeigu manipuliuojama primityviaisiais duomenimis ir simbolių eilutėmis) arba ObjectInput/Output/Stream (jeigu norima įrašyti objektus su visais laukais-priklausiniais). Objekto klasė pastaruoju atveju turi įgyvendinti interfeisą Serializable. Tas pats (rekursyviai) galioja ir klasės laukams.
+
+Tipiškas scenarijus programoje su vartotojo grafine sąsaja galėtų būti toks. Nuspaudos tam skirtą mygtuką "nuskaityti" sukuriama ir paleidžiama gija, kuri atlieka nuskaitymo veiksmus. Rezultatas (Runnable objektas) perduodamas vartotojo sąsajai, naudojant SwingUtilities.invokeLater(Runnable) metodą. Veiksmas "išsaugoti", atitinkamai, paleidžia giją kurį įvykdo programos būsenos išsaugojimą faile.
