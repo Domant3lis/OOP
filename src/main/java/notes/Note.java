@@ -1,64 +1,68 @@
 package notes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.String;
 
-public abstract class Note implements TimedSearchable, Cloneable {
-    final private LocalDateTime creationDateTime;
+public class Note implements Cloneable {
+    final private LocalDateTime creationDateTime = LocalDateTime.now();
 
-    private String title, description;
+    private String title;
+    private List<Note> subnotes = new ArrayList<Note>();
 
-    public Note(String title, String description) {
+    public Note(String title) {
         this.title = title;
-        this.description = description;
-        this.creationDateTime = LocalDateTime.now();
     }
 
     @Override
     public String toString() {
         return new String(
-                "Title: " + this.title +
-                        "\nDescription: " + this.description +
-                        "\nCreated at: " + this.creationDateTime);
+        "Title: " + this.title +
+        "\nCreated at: " + this.creationDateTime);
     }
 
     public Note clone() throws CloneNotSupportedException {
         Note newNote = (Note) super.clone();
-        // newNote.title = new String(this.title);
-        // newNote.description = new String(this.description);
+        this.subnotes = new ArrayList<Note>(getSubnotes());
 
         return newNote;
     }
 
-    public boolean titleContains(String match) {
-        return (this.title.contains(match));
-    }
+    // public boolean titleContains(String match) {
+    //     return this.title.contains(match);
+    // }
 
-    public boolean titleContains(Pattern regex) {
-        Matcher title = regex.matcher(this.title);
-        if (title.find())
-            return true;
+    // public boolean titleContains(Pattern regex) {
+    //     Matcher title = regex.matcher(this.title);
+    //     if (title.find())
+    //         return true;
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    public boolean descriptionContains(String match) {
-        return (this.description.contains(match));
-    }
+    // public boolean contains(String match) {
+    //     return this.creationDateTime.toString().contains(match) || titleContains(match);
+    // }
 
-    public boolean descriptionContains(Pattern regex) {
-        Matcher title = regex.matcher(this.description);
-        if (title.find())
-            return true;
+    // // public boolean contains(Pattern regex) {
+    // //     return titleContains(regex);
+    // // }
 
-        return false;
-    }
+    // public boolean contentContains(String match)
+    // {
+    //     return contains(match) ||
+    //         getSubnotes().stream().anyMatch(note -> note.itselfContains(match));
+    // }
 
-    abstract public boolean contentContains(String match);
-
-    abstract public boolean contentContains(Pattern regex);
+    // public boolean contentContains(Pattern regex)
+    // {
+    //     boolean ret = false;
+    //     ret ||= 
+    //     return ret; // itselfContains(regex)
+    // }
 
     public boolean isCreatedBetweenTimedRange(LocalDateTime start, LocalDateTime end, boolean startInclusive,
             boolean endInclusive) {
@@ -88,37 +92,22 @@ public abstract class Note implements TimedSearchable, Cloneable {
         return this.creationDateTime.isEqual(time);
     }
 
-    // Appends a string to the contents of the note
-    abstract public void appendToContent(String appendix);
-
     // Appends a string to the title
     final public void appendToTitle(String appendix) {
         this.title = this.title.concat(appendix);
     }
 
-    // Appends a string to the title
-    final public void appendToDescription(String appendix) {
-        this.description = this.description.concat(appendix);
+    final public void addSubNote(Note appendix) 
+        { this.subnotes.add(appendix); }
+    
+    final public List<Note> getSubNotes()
+    {
+        return this.subnotes;
     }
 
     // Getters and setters
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String desc) {
-        this.description = desc;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public LocalDateTime getCreationDateTime() { return creationDateTime; }
+    public String getTitle() { return this.title; }
+    public void setTitle(String title) { this.title = title; }
+    public List<Note> getSubnotes() { return this.subnotes; }
 }

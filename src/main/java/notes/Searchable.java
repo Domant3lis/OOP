@@ -1,13 +1,14 @@
 package notes;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public interface Searchable
 {
-    public boolean titleContains(String match);
-    public boolean titleContains(Pattern regex);
-    public boolean descriptionContains(String match);
-    public boolean descriptionContains(Pattern regex);
-    public boolean contentContains(String match);
-    public boolean contentContains(Pattern regex);
+    public boolean itselfContains(String match);
+    public boolean itselfContains(Pattern regex);
+    public boolean contains(String match);
+    public boolean contains(Pattern regex);
+    public Optional<Note> subNoteContains(String match);
+    public Optional<Note> subNoteContains(Pattern regex);
 }

@@ -10,9 +10,9 @@ public class Event extends Note {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
-    public Event(String title, String desc, LocalDateTime start, LocalDateTime end)
+    public Event(String title, LocalDateTime start, LocalDateTime end)
             throws IllegalArgumentException {
-        super(title, desc);
+        super(title);
 
         if (start == null || end == null)
             throw new IllegalArgumentException("Neither start, nor end datetime should be null");
@@ -27,11 +27,9 @@ public class Event extends Note {
 
     @Override
     public String toString() {
-        String ret = super.toString();
-        String concat = new String(
-                "\nStarts at: " + getStartDateTime() +
-                        "\nEnds at: " + getEndDateTime());
-        return ret.concat(concat);
+        return super.toString().concat(
+            "\nStarts at: " + getStartDateTime() +
+            "\nEnds at: " + getEndDateTime());
     }
 
     @Override
@@ -89,43 +87,33 @@ public class Event extends Note {
         this.endDateTime = newTime;
     }
 
-    @Override
-    public boolean contentContains(String match) {
-        if (titleContains(match))
-            return true;
+    // @Override
+    // public boolean contentContains(String match) {
+    //     if (titleContains(match))
+    //         return true;
 
-        if (descriptionContains(match))
-            return true;
+    //     if (this.startDateTime.toString().contains(match))
+    //         return true;
 
-        if (this.startDateTime.toString().contains(match))
-            return true;
+    //     if (this.endDateTime.toString().contains(match))
+    //         return true;
 
-        if (this.endDateTime.toString().contains(match))
-            return true;
+    //     return false;
+    // }
 
-        return false;
-    }
+    // @Override
+    // public boolean contentContains(Pattern regex) {
+    //     if (titleContains(regex))
+    //         return true;
 
-    @Override
-    public boolean contentContains(Pattern regex) {
-        if (titleContains(regex))
-            return true;
+    //     if (regex.matcher(this.startDateTime.toString()).find())
+    //         return true;
 
-        if (descriptionContains(regex))
-            return true;
+    //     if (regex.matcher(this.endDateTime.toString()).find())
+    //         return true;
 
-        if (regex.matcher(this.startDateTime.toString()).find())
-            return true;
-
-        if (regex.matcher(this.endDateTime.toString()).find())
-            return true;
-
-        return false;
-    }
-
-    public void appendToContent(String appendix) {
-        setDescription(getDescription().concat(appendix));
-    }
+    //     return false;
+    // }
 
     public Duration getDuration() {
         return Duration.between(startDateTime, getEndDateTime());
