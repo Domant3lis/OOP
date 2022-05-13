@@ -12,9 +12,9 @@ public class Contact extends Note
     private HashMap<String, String> fields = new LinkedHashMap<String, String>();
     private LocalDateTime birthday;
 
-    public Contact(String title, String description, String fullName, String phoneNumber, String email, LocalDateTime birthday)
+    public Contact(String title, String fullName, String phoneNumber, String email, LocalDateTime birthday)
     {
-        super(title, description);
+        super(title);
         setFullName(fullName);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -49,29 +49,29 @@ public class Contact extends Note
         return clone;
     }
 
-    @Override
-    public boolean contentContains(String match)
-    {
-        if (titleContains(match) || descriptionContains(match))
-            return true;
+    // @Override
+    // public boolean contentContains(String match)
+    // {
+    //     if (titleContains(match) || descriptionContains(match))
+    //         return true;
 
-        if (this.birthday != null && this.birthday.toString().contains(match))
-            return true;
+    //     if (this.birthday != null && this.birthday.toString().contains(match))
+    //         return true;
         
-        return this.fields.values().stream().anyMatch( v -> v.contains(match) );
-    }
+    //     return this.fields.values().stream().anyMatch( v -> v.contains(match) );
+    // }
 
-    @Override
-    public boolean contentContains(Pattern regex)
-    {
-        if (titleContains(regex) || descriptionContains(regex))
-            return true;
+    // @Override
+    // public boolean contentContains(Pattern regex)
+    // {
+    //     if (titleContains(regex) || descriptionContains(regex))
+    //         return true;
         
-        if (this.birthday != null && regex.matcher(this.birthday.toString()).find())
-            return true;
+    //     if (this.birthday != null && regex.matcher(this.birthday.toString()).find())
+    //         return true;
         
-        return this.fields.values().stream().anyMatch( v -> regex.matcher(v).find());
-    }
+    //     return this.fields.values().stream().anyMatch( v -> regex.matcher(v).find());
+    // }
 
     public boolean hasField(String key)
         { return fields.containsKey(key); }
