@@ -3,9 +3,12 @@ package notes;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.lang.String;
 
-public abstract class Note implements TimedSearchable, Cloneable {
+public class Note implements Serializable, Cloneable {
     final private LocalDateTime creationDateTime;
 
     private String title, description;
@@ -56,9 +59,21 @@ public abstract class Note implements TimedSearchable, Cloneable {
         return false;
     }
 
-    abstract public boolean contentContains(String match);
+    public void writeObject(java.io.ObjectOutputStream out) throws IOException {
 
-    abstract public boolean contentContains(Pattern regex);
+    }
+
+    public void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+
+    }
+
+    public void readObjectNoData() throws ObjectStreamException {
+
+    }
+
+    // abstract public boolean contentContains(String match);
+
+    // abstract public boolean contentContains(Pattern regex);
 
     public boolean isCreatedBetweenTimedRange(LocalDateTime start, LocalDateTime end, boolean startInclusive,
             boolean endInclusive) {
@@ -89,7 +104,7 @@ public abstract class Note implements TimedSearchable, Cloneable {
     }
 
     // Appends a string to the contents of the note
-    abstract public void appendToContent(String appendix);
+    // public void appendToContent(String appendix);
 
     // Appends a string to the title
     final public void appendToTitle(String appendix) {
