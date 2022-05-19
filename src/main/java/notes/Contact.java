@@ -49,7 +49,7 @@ public class Contact extends Note
         return clone;
     }
 
-    @Override
+    // @Override
     public boolean contentContains(String match)
     {
         if (titleContains(match) || descriptionContains(match))
@@ -57,19 +57,19 @@ public class Contact extends Note
 
         if (this.birthday != null && this.birthday.toString().contains(match))
             return true;
-        
+
         return this.fields.values().stream().anyMatch( v -> v.contains(match) );
     }
 
-    @Override
+    // @Override
     public boolean contentContains(Pattern regex)
     {
         if (titleContains(regex) || descriptionContains(regex))
             return true;
-        
+
         if (this.birthday != null && regex.matcher(this.birthday.toString()).find())
             return true;
-        
+
         return this.fields.values().stream().anyMatch( v -> regex.matcher(v).find());
     }
 
@@ -94,7 +94,7 @@ public class Contact extends Note
 
         System.out.println("Write Subject line: ");
         String subjectLine = scanner.nextLine();
-        
+
         System.out.println("Write Body line: ");
         String body = scanner.nextLine();
         System.out.println("Use this link in your browser: " + appendix + "?subject=" + subjectLine + "&body=" + body);
@@ -105,14 +105,14 @@ public class Contact extends Note
     {
         this.fields.put("Custom Field", appendix);
     }
-    
+
     // Only getters and setters below
     public LocalDateTime getBirthday() { return this.birthday; }
     public String getFullName() { return fields.get(presets[0]); }
     public String getPhoneNumber() { return fields.get(presets[1]); }
     public String getEmail() { return fields.get(presets[2]); }
     public String getCustom(String key) {return fields.get(key); }
-    
+
     public void setBirthday(LocalDateTime birthday) { this.birthday = birthday; }
     public void setFullName(String fullName) { this.fields.put(presets[0], fullName); }
     public void setPhoneNumber(String phoneNumber) { this.fields.put(presets[1], phoneNumber); }

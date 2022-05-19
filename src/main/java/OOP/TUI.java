@@ -40,11 +40,25 @@ public class TUI extends Thread {
         System.out.flush();
     }
 
+    private boolean commandConflict(List<String> commands)
+    {
+        for (String com : commands)
+        {
+            if (this.actions.keySet().contains(com))
+                return true;
+        }
+        return false;
+    }
+
     public void onCommandDo(
         String help,
         List<String> commands,
         BiConsumer<List<String>, List<Note>> action)
+        throws Exception
     {
+        if (commandConflict(commands))
+            throw new Exception("This command name is already taken");
+
         this.helpInstructions.add(new String(commands.toString() + commandHelpSep + help));
 
         for (String command : commands)
@@ -79,9 +93,11 @@ public class TUI extends Thread {
 
             // Match commands to actions
             if (this.actions.containsKey(input.get(0))) {
-                this.actions.get(input.get(0)).accept(
+                this.actions.get(input.get(0))
+                    .accept(
                         input.subList(1, input.size()),
                         notesRef);
+                // notesRef.forEach(e -> { System.out.print(e + "\n"); });
             } else {
                 System.out.println(errorMsg);
             }
@@ -91,8 +107,6 @@ public class TUI extends Thread {
         scanner.close();
     }
 
-    // private List<String> parse(String )
-    // {
-
-    // }
+    public void setNotesRef(List<Note> notes) { this.notesRef = notes; }
+    public void addNotesRef(Note note) { this.notesRef.add(note); }
 }

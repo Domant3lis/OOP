@@ -10,11 +10,14 @@ import java.util.Scanner;
 import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.IllegalArgumentException;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
         final String errMsg = "Invalid arguments, type `help` for usage";
 
@@ -31,14 +34,6 @@ public class App {
 
         tui.onCommandDo("Displays this page", List.of("help"), (argList, noteList) -> {
             tui.displayHelp();
-        });
-
-        tui.onCommandDo("Loads a save file", List.of("load"), (argList, noteList) -> {
-            // TODO
-        });
-
-        tui.onCommandDo("Saves current information into a file", List.of("save"), (argList, noteList) -> {
-            // TODO
         });
 
         tui.onCommandDo("Creates a new entry", List.of("new"), (argList, noteList) -> {
@@ -61,26 +56,45 @@ public class App {
 
         });
 
-        tui.onCommandDo("Load a file", List.of("load"), (argList, noteList) -> {
-
-            // if (noteList.size() != 0)
-            // {
-            //     Scanner scan = new
-            //     System.out.println("WARNING: Current content will be erased, continue [y/N]: ");
-            //     return;
-            // }
-
-            try {
-                FileInputStream in = new FileInputStream(argList.get(0));
-                ObjectInputStream s = new ObjectInputStream(in);
-                noteList = (List<Note>) s.readObject();
-                System.out.println(noteList);
-                s.close();
-            } catch (Exception e) { System.out.println(e); }
-        });
-
         tui.onCommandDo("Displays all entries", List.of("display"), (argList, noteList) -> {
             noteList.forEach(e -> {System.out.println(e + "\n"); });
+        });
+
+        tui.onCommandDo("Save a file", List.of("save"), (argList, noteList) -> {
+            Thread t = new Thread(
+                new Runnable() {
+                    public void run() {
+                        try {
+                            FileOutputStream out = new FileOutputStream(argList.get(0));
+                            ObjectOutputStream s = new ObjectOutputStream(out);
+
+                            s.writeObject((ArrayList<Note>) noteList);
+                            s.flush();
+                            s.close();
+                            System.out.println("File '" + argList.get(0) + "' has been saved succesfully");
+                        } catch (IOException ioEx) { System.out.println(ioEx); }
+                    }
+                 }
+            );
+            t.run();
+        });
+
+        tui.onCommandDo("Load a file", List.of("load"), (argList, noteList) -> {
+            Thread t = new Thread(
+                new Runnable() {
+                    public void run() {
+                        try {
+                            FileInputStream in = new FileInputStream(argList.get(0));
+                            ObjectInputStream s = new ObjectInputStream(in);
+
+                            tui.setNotesRef((ArrayList<Note>) s.readObject());
+                            s.close();
+                            System.out.println("File '" + argList.get(0) + "' has been loaded succesfully");
+                        } catch (Exception e) { System.out.println(e); }
+                    }
+                 }
+            );
+            t.run();
         });
 
         tui.run();

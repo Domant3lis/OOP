@@ -79,9 +79,9 @@ public class Event extends Note {
 
     // Time related methods
     // to subtract time amountToAdd should be negative
-    public void addTimeToEnd(long amountToAdd, TemporalUnit unit) 
+    public void addTimeToEnd(long amountToAdd, TemporalUnit unit)
         throws IncorrectTimeRangeException {
-        
+
         LocalDateTime newTime = this.endDateTime.plus(amountToAdd, unit);
         if (newTime.isBefore(this.startDateTime))
             throw new IncorrectTimeRangeException(this.startDateTime, newTime);
@@ -89,7 +89,7 @@ public class Event extends Note {
         this.endDateTime = newTime;
     }
 
-    @Override
+    // @Override
     public boolean contentContains(String match) {
         if (titleContains(match))
             return true;
@@ -106,7 +106,7 @@ public class Event extends Note {
         return false;
     }
 
-    @Override
+    // @Override
     public boolean contentContains(Pattern regex) {
         if (titleContains(regex))
             return true;
