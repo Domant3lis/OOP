@@ -6,8 +6,11 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.lang.IllegalArgumentException;
 
 public class App {
@@ -56,6 +59,24 @@ public class App {
                 System.out.println("Wrong number of arguments");
             }
 
+        });
+
+        tui.onCommandDo("Load a file", List.of("load"), (argList, noteList) -> {
+
+            // if (noteList.size() != 0)
+            // {
+            //     Scanner scan = new
+            //     System.out.println("WARNING: Current content will be erased, continue [y/N]: ");
+            //     return;
+            // }
+
+            try {
+                FileInputStream in = new FileInputStream(argList.get(0));
+                ObjectInputStream s = new ObjectInputStream(in);
+                noteList = (List<Note>) s.readObject();
+                System.out.println(noteList);
+                s.close();
+            } catch (Exception e) { System.out.println(e); }
         });
 
         tui.onCommandDo("Displays all entries", List.of("display"), (argList, noteList) -> {
