@@ -1,6 +1,7 @@
 package notes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -19,6 +20,15 @@ public class Contact extends Note
         setPhoneNumber(phoneNumber);
         setEmail(email);
         this.birthday = birthday;
+    }
+
+    public Contact(String title, String description, String fullName, String phoneNumber, String email, String birthday)
+    {
+        this(title, description, fullName, phoneNumber, email, LocalDateTime.now());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime parsed = LocalDateTime.parse(birthday, formatter);
+
+        this.birthday = parsed;
     }
 
     @Override

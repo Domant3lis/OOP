@@ -2,10 +2,9 @@ package OOP;
 
 import notes.*;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.*;
@@ -22,16 +21,15 @@ public class TUI extends Thread {
 
     private List<String> helpInstructions = new ArrayList<String>();
 
-    private List<Note> notesRef;
+    private List<Note> notesRef = new LinkedList<>();
 
-    private BiConsumer<List<String>, List<Note>> initAction;
+    private Consumer<List<String>> initAction;
 
-    private HashMap<String, BiConsumer<List<String>, List<Note>>> actions = new HashMap<>();
+    private HashMap<String, Consumer<List<String>>> actions = new HashMap<>();
 
-    public TUI(String exitHelp, List<Note> notesRef, List<String> exitCommand) {
+    public TUI(String exitHelp, List<String> exitCommand) {
         this.exitCommand = new ArrayList<>(exitCommand);
-        this.notesRef = notesRef;
-        this.initAction = (l0, l1) -> {};
+        this.initAction = (l0) -> {};
         this.helpInstructions.add(exitCommand.toString() + commandHelpSep + exitHelp);
     }
 
@@ -53,7 +51,7 @@ public class TUI extends Thread {
     public void onCommandDo(
         String help,
         List<String> commands,
-        BiConsumer<List<String>, List<Note>> action)
+        Consumer<List<String>> action)
         throws Exception
     {
         if (commandConflict(commands))
@@ -70,7 +68,7 @@ public class TUI extends Thread {
         this.helpInstructions.forEach(System.out::println);
     }
 
-    public void onStartDo(BiConsumer<List<String>, List<Note>> action) {
+    public void onStartDo(Consumer<List<String>> action) {
         this.initAction = action;
     }
 
@@ -79,13 +77,13 @@ public class TUI extends Thread {
         String inputLine;
 
         clearScreen();
-        initAction.accept(List.of(), List.of());
+        initAction.accept(List.of());
 
         while (true) {
             System.out.print(lineBeginning);
             inputLine = scanner.nextLine();
 
-            List<String> input = List.of(inputLine.split(" "));
+            List<String> input = List.of(inputLine.split("; "));
 
             // Searches for exit command
             if (exitCommand.stream().anyMatch(ec -> ec.equals(input.get(0))))
@@ -94,19 +92,16 @@ public class TUI extends Thread {
             // Match commands to actions
             if (this.actions.containsKey(input.get(0))) {
                 this.actions.get(input.get(0))
-                    .accept(
-                        input.subList(1, input.size()),
-                        notesRef);
-                // notesRef.forEach(e -> { System.out.print(e + "\n"); });
+                    .accept(input.subList(1, input.size()));
             } else {
                 System.out.println(errorMsg);
             }
-
         }
 
         scanner.close();
     }
 
+    public List<Note> getNotesRef() { return this.notesRef; }
     public void setNotesRef(List<Note> notes) { this.notesRef = notes; }
     public void addNotesRef(Note note) { this.notesRef.add(note); }
 }

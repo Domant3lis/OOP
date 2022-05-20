@@ -10,11 +10,11 @@ To build and run: `mvn compile javafx:run`
 
 ### [Task I.2](https://github.com/Domant3lis/OOP/commit/8c739fac20d0ae6f54b1837485689685ea0bdb0b)
 - [x] konstruktoriai, iš kurių vieną beargumentis, panaudoti this() konstrukciją
-- [x] laukai, kuriems priega užtikrinama get/set metodais. Bent vienas laukas turi būti inicijuotas pradine reikšme.
+- [x] laukai, kuriems prieiga užtikrinama get/set metodais. Bent vienas laukas turi būti inicijuotas pradine reikšme.
 - [x] (nestatinius) metodus. Bent vienas metodas turi būti perkrautas (overloaded)
 - [x] Apibrėžti metodą println(), kuris išveda objekto turinį į išvedimo srautą
-- [x] Įtraukti į klasės apibrėžimą ir prasmingai panaugoti static bei final elementus
-- [x] Apibrėžti kitą (testinę klasę), kuri sukurtų pirmosios klasės objetus, jais pasinaudotų, kviesdama metodus, ir išvedinėtų laukų būsenas.
+- [x] Įtraukti į klasės apibrėžimą ir prasmingai panaudoti static bei final elementus
+- [x] Apibrėžti kitą (testinę klasę), kuri sukurtų pirmosios klasės objektus, jais pasinaudotų, kviesdama metodus, ir išvedinėtų laukų būsenas.
 
 ### [Task II.1](https://github.com/Domant3lis/OOP/commit/d2159281d74772ba2e6aba5ac209bc0246eba340)
 Išvestinės klasės privalo:
@@ -50,4 +50,16 @@ Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi r
 - [x] Vykdyti šiuos veiksmus atskiroje gijoje (arba gijas panaudoti kitiems poreikiams).
 - [x] Duomenų skaitymui rašymui naudoti DataInput/Output/Stream (jeigu manipuliuojama primityviaisiais duomenimis ir simbolių eilutėmis) arba ObjectInput/Output/Stream (jeigu norima įrašyti objektus su visais laukais-priklausiniais). Objekto klasė pastaruoju atveju turi įgyvendinti interfeisą Serializable. Tas pats (rekursyviai) galioja ir klasės laukams.
 
-Tipiškas scenarijus programoje su vartotojo grafine sąsaja galėtų būti toks. Nuspaudos tam skirtą mygtuką "nuskaityti" sukuriama ir paleidžiama gija, kuri atlieka nuskaitymo veiksmus. Rezultatas (Runnable objektas) perduodamas vartotojo sąsajai, naudojant SwingUtilities.invokeLater(Runnable) metodą. Veiksmas "išsaugoti", atitinkamai, paleidžia giją kurį įvykdo programos būsenos išsaugojimą faile.
+Tipiškas scenarijus programoje su vartotojo grafine sąsaja galėtų būti toks. Nuspaudus tam skirtą mygtuką "nuskaityti" sukuriama ir paleidžiama gija, kuri atlieka nuskaitymo veiksmus. Rezultatas (Runnable objektas) perduodamas vartotojo sąsajai, naudojant SwingUtilities.invokeLater(Runnable) metodą. Veiksmas "išsaugoti", atitinkamai, paleidžia giją kurį įvykdo programos būsenos išsaugojimą faile.
+
+### Task IIII.2
+- [ ] Panaudokite java standartines kolekcijas.
+- [ ] Užbaikite projektinę programą ir trumpai aprašykite atskirame dokumente:
+  - [ ] paskirtis
+  - [ ] paleidimas
+  - [ ] funkcionalumas
+  - [ ] pagrindinės klasės
+  - [ ] klasių diagrama
+  - [ ] plėtimo galimybės ir t.t.
+- [ ] Apraše identifikuokite programos dalis (klases), kuriose panaudojote žinomus projektavimo šablonus (design patterns).
+  - [ ] Sugeneruokite programos klasių dokumentaciją javadoc instrumentu.
