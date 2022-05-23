@@ -2,7 +2,8 @@
 package OOP;
 
 import notes.*;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -61,7 +62,7 @@ public class App {
                             FileOutputStream out = new FileOutputStream(argList.get(0));
                             ObjectOutputStream s = new ObjectOutputStream(out);
 
-                            s.writeObject((ArrayList<Note>) tui.getNotesRef());
+                            s.writeObject((LinkedList<Note>) tui.getNotesRef());
                             s.flush();
                             s.close();
                             System.out.println("File '" + argList.get(0) + "' has been saved succesfully");

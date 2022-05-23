@@ -45,7 +45,7 @@ Atkreipti dėmesį, kad konkrečiosios klasės funkcionalumo panaudojimas turi r
 - [x] Kitoje klasėje klonavimą prasmingai panaudoti.
 - [x] Identifikuoti tinkamą situaciją ir prasmingai panaudoti vieną iš aukščiau minėtųjų objektų kūrimo šablonų (**prototipo**, metodo-gamyklos, abstrakčiosios gamyklos).
 
-### [Task IIII.1](https://github.com/Domant3lis/OOP/commit/a036b4101d9f15e2b927167e0f4094d58b5ecf9a)
+### [Task IIII.1](https://github.com/Domant3lis/OOP/commit/32eec4388e1be067b650a706762557d904664522)
 - [x] Suteikti programai galimybę išsaugoti duomenis/būseną/nuostatas faile binariniu pavidalu ir nuskaityti iš failo.
 - [x] Vykdyti šiuos veiksmus atskiroje gijoje (arba gijas panaudoti kitiems poreikiams).
 - [x] Duomenų skaitymui rašymui naudoti DataInput/Output/Stream (jeigu manipuliuojama primityviaisiais duomenimis ir simbolių eilutėmis) arba ObjectInput/Output/Stream (jeigu norima įrašyti objektus su visais laukais-priklausiniais). Objekto klasė pastaruoju atveju turi įgyvendinti interfeisą Serializable. Tas pats (rekursyviai) galioja ir klasės laukams.

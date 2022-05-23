@@ -29,9 +29,6 @@ public class Note implements Serializable, Cloneable {
 
     public Note clone() throws CloneNotSupportedException {
         Note newNote = (Note) super.clone();
-        // newNote.title = new String(this.title);
-        // newNote.description = new String(this.description);
-
         return newNote;
     }
 
@@ -57,18 +54,6 @@ public class Note implements Serializable, Cloneable {
             return true;
 
         return false;
-    }
-
-    public void writeObject(java.io.ObjectOutputStream out) throws IOException {
-
-    }
-
-    public void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-
-    }
-
-    public void readObjectNoData() throws ObjectStreamException {
-
     }
 
     // abstract public boolean contentContains(String match);
