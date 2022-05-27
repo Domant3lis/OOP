@@ -28,3 +28,7 @@ hs_err_pid*
 # Ignore Gradle build output directory
 build
 target
+
+# Editor settings
+.idea
+.vscode

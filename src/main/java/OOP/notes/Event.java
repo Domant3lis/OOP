@@ -1,4 +1,4 @@
-package notes;
+package OOP.notes;
 
 import java.lang.String;
 import java.time.Duration;
@@ -10,9 +10,9 @@ public class Event extends Note {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
-    public Event(String title, LocalDateTime start, LocalDateTime end)
+    public Event(String title, String desc, LocalDateTime start, LocalDateTime end)
             throws IllegalArgumentException {
-        super(title);
+        super(title, desc);
 
         if (start == null || end == null)
             throw new IllegalArgumentException("Neither start, nor end datetime should be null");
@@ -27,9 +27,11 @@ public class Event extends Note {
 
     @Override
     public String toString() {
-        return super.toString().concat(
-            "\nStarts at: " + getStartDateTime() +
-            "\nEnds at: " + getEndDateTime());
+        String ret = super.toString();
+        String concat = new String(
+                "\nStarts at: " + getStartDateTime() +
+                        "\nEnds at: " + getEndDateTime());
+        return ret.concat(concat);
     }
 
     @Override
@@ -77,9 +79,9 @@ public class Event extends Note {
 
     // Time related methods
     // to subtract time amountToAdd should be negative
-    public void addTimeToEnd(long amountToAdd, TemporalUnit unit) 
+    public void addTimeToEnd(long amountToAdd, TemporalUnit unit)
         throws IncorrectTimeRangeException {
-        
+
         LocalDateTime newTime = this.endDateTime.plus(amountToAdd, unit);
         if (newTime.isBefore(this.startDateTime))
             throw new IncorrectTimeRangeException(this.startDateTime, newTime);
@@ -88,32 +90,42 @@ public class Event extends Note {
     }
 
     // @Override
-    // public boolean contentContains(String match) {
-    //     if (titleContains(match))
-    //         return true;
+    public boolean contentContains(String match) {
+        if (titleContains(match))
+            return true;
 
-    //     if (this.startDateTime.toString().contains(match))
-    //         return true;
+        if (descriptionContains(match))
+            return true;
 
-    //     if (this.endDateTime.toString().contains(match))
-    //         return true;
+        if (this.startDateTime.toString().contains(match))
+            return true;
 
-    //     return false;
-    // }
+        if (this.endDateTime.toString().contains(match))
+            return true;
+
+        return false;
+    }
 
     // @Override
-    // public boolean contentContains(Pattern regex) {
-    //     if (titleContains(regex))
-    //         return true;
+    public boolean contentContains(Pattern regex) {
+        if (titleContains(regex))
+            return true;
 
-    //     if (regex.matcher(this.startDateTime.toString()).find())
-    //         return true;
+        if (descriptionContains(regex))
+            return true;
 
-    //     if (regex.matcher(this.endDateTime.toString()).find())
-    //         return true;
+        if (regex.matcher(this.startDateTime.toString()).find())
+            return true;
 
-    //     return false;
-    // }
+        if (regex.matcher(this.endDateTime.toString()).find())
+            return true;
+
+        return false;
+    }
+
+    public void appendToContent(String appendix) {
+        setDescription(getDescription().concat(appendix));
+    }
 
     public Duration getDuration() {
         return Duration.between(startDateTime, getEndDateTime());

@@ -1,6 +1,7 @@
-package notes;
+package OOP.notes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -12,13 +13,22 @@ public class Contact extends Note
     private HashMap<String, String> fields = new LinkedHashMap<String, String>();
     private LocalDateTime birthday;
 
-    public Contact(String title, String fullName, String phoneNumber, String email, LocalDateTime birthday)
+    public Contact(String title, String description, String fullName, String phoneNumber, String email, LocalDateTime birthday)
     {
-        super(title);
+        super(title, description);
         setFullName(fullName);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         this.birthday = birthday;
+    }
+
+    public Contact(String title, String description, String fullName, String phoneNumber, String email, String birthday)
+    {
+        this(title, description, fullName, phoneNumber, email, LocalDateTime.now());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime parsed = LocalDateTime.parse(birthday, formatter);
+
+        this.birthday = parsed;
     }
 
     @Override
@@ -50,28 +60,28 @@ public class Contact extends Note
     }
 
     // @Override
-    // public boolean contentContains(String match)
-    // {
-    //     if (titleContains(match) || descriptionContains(match))
-    //         return true;
+    public boolean contentContains(String match)
+    {
+        if (titleContains(match) || descriptionContains(match))
+            return true;
 
-    //     if (this.birthday != null && this.birthday.toString().contains(match))
-    //         return true;
-        
-    //     return this.fields.values().stream().anyMatch( v -> v.contains(match) );
-    // }
+        if (this.birthday != null && this.birthday.toString().contains(match))
+            return true;
+
+        return this.fields.values().stream().anyMatch( v -> v.contains(match) );
+    }
 
     // @Override
-    // public boolean contentContains(Pattern regex)
-    // {
-    //     if (titleContains(regex) || descriptionContains(regex))
-    //         return true;
-        
-    //     if (this.birthday != null && regex.matcher(this.birthday.toString()).find())
-    //         return true;
-        
-    //     return this.fields.values().stream().anyMatch( v -> regex.matcher(v).find());
-    // }
+    public boolean contentContains(Pattern regex)
+    {
+        if (titleContains(regex) || descriptionContains(regex))
+            return true;
+
+        if (this.birthday != null && regex.matcher(this.birthday.toString()).find())
+            return true;
+
+        return this.fields.values().stream().anyMatch( v -> regex.matcher(v).find());
+    }
 
     public boolean hasField(String key)
         { return fields.containsKey(key); }
@@ -94,7 +104,7 @@ public class Contact extends Note
 
         System.out.println("Write Subject line: ");
         String subjectLine = scanner.nextLine();
-        
+
         System.out.println("Write Body line: ");
         String body = scanner.nextLine();
         System.out.println("Use this link in your browser: " + appendix + "?subject=" + subjectLine + "&body=" + body);
@@ -105,14 +115,14 @@ public class Contact extends Note
     {
         this.fields.put("Custom Field", appendix);
     }
-    
+
     // Only getters and setters below
     public LocalDateTime getBirthday() { return this.birthday; }
     public String getFullName() { return fields.get(presets[0]); }
     public String getPhoneNumber() { return fields.get(presets[1]); }
     public String getEmail() { return fields.get(presets[2]); }
     public String getCustom(String key) {return fields.get(key); }
-    
+
     public void setBirthday(LocalDateTime birthday) { this.birthday = birthday; }
     public void setFullName(String fullName) { this.fields.put(presets[0], fullName); }
     public void setPhoneNumber(String phoneNumber) { this.fields.put(presets[1], phoneNumber); }

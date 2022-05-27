@@ -1,4 +1,4 @@
-package notes;
+package OOP.notes;
 
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalUnit;
@@ -11,9 +11,9 @@ public class Todo extends Note{
     private LocalDateTime deadline; 
     List<String> actions;
 
-    public Todo(String title, LocalDateTime deadline)
+    public Todo(String title, String desc, LocalDateTime deadline)
     {
-        super(title);
+        super(title, desc);
         this.deadline = deadline;
         this.actions = new ArrayList<String>();
     }
