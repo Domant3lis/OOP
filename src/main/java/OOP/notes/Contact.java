@@ -1,4 +1,4 @@
-package notes;
+package OOP.notes;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

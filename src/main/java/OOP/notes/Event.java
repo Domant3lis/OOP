@@ -1,4 +1,4 @@
-package notes;
+package OOP.notes;
 
 import java.lang.String;
 import java.time.Duration;

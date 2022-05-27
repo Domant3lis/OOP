@@ -1,4 +1,4 @@
-package notes;
+package OOP.notes;
 
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
@@ -18,13 +18,16 @@ public class Note implements Serializable, Cloneable {
         this.description = description;
         this.creationDateTime = LocalDateTime.now();
     }
+    
+    public Note() {
+        this.title = "Untitled";
+        this.description = "";
+        this.creationDateTime = LocalDateTime.now();
+    }
 
     @Override
     public String toString() {
-        return new String(
-                "Title: " + this.title +
-                        "\nDescription: " + this.description +
-                        "\nCreated at: " + this.creationDateTime);
+        return new String(this.title);
     }
 
     public Note clone() throws CloneNotSupportedException {

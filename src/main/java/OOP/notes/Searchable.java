@@ -1,4 +1,4 @@
-package notes;
+package OOP.notes;
 
 import java.util.regex.Pattern;
 
